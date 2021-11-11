@@ -12,17 +12,7 @@ class SecondScreen extends StatefulWidget {
 }
 
 class _SecondScreenState extends State<SecondScreen> {
-  late var finaltime = (widget.starttime! + widget.exittime!);
   final CustomTimerController _controller = CustomTimerController();
-  late final cot = widget.count!;
-  @override
-  void initState() {
-    super.initState();
-    // ignore: avoid_print
-    print(finaltime!);
-    // ignore: avoid_print
-    print(cot!);
-  }
 
   bool select = false;
   @override
@@ -62,18 +52,11 @@ class _SecondScreenState extends State<SecondScreen> {
                 interval: const Duration(seconds: 1),
                 builder: (CustomTimerRemainingTime remaining) {
                   return Text(
-                    "${remaining.minutes}:${remaining.seconds}",
+                    widget.starttime! + widget.exittime,
                     style: const TextStyle(fontSize: 30.0),
                   );
                 },
               ),
-              // Text(
-              //   finaltime,
-              //   style: const TextStyle(
-              //       color: Colors.black,
-              //       fontSize: 22,
-              //       fontWeight: FontWeight.bold),
-              // ),
               Column(
                 children: [
                   Row(
