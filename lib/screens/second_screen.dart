@@ -1,5 +1,6 @@
 import 'package:custom_timer/custom_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:skns/screens/finished_widget.dart';
 
 class SecondScreen extends StatefulWidget {
   final String? starttime;
@@ -13,8 +14,13 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   final CustomTimerController _controller = CustomTimerController();
-
+  late final String calcultetime = (widget.starttime! + widget.exittime!);
   bool select = false;
+  navigator() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const FinishedWidget()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +52,15 @@ class _SecondScreenState extends State<SecondScreen> {
                 ),
               ),
               CustomTimer(
+                onFinish: navigator,
                 controller: _controller,
-                from: const Duration(hours: 12),
+                from: calcultetime as Duration,
                 to: const Duration(hours: 0),
                 interval: const Duration(seconds: 1),
                 builder: (CustomTimerRemainingTime remaining) {
                   return Text(
-                    widget.starttime! + widget.exittime,
-                    style: const TextStyle(fontSize: 30.0),
+                    "${remaining.minutes}:${remaining.seconds}",
+                    style: const TextStyle(fontSize: 50.0),
                   );
                 },
               ),

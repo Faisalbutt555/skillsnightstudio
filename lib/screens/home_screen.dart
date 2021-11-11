@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   FocusNode? trainingnode;
   String? pickedtime;
   String? breakedtime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         showTitleActions: true,
                         currentTime: DateTime.now(), onConfirm: (time) {
                       setState(() {
-                        pickedtime = "${time.minute}: ${time.second}";
+                        pickedtime = "${time.hour} : ${time.minute}";
                       });
                     });
                   },
@@ -84,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         showTitleActions: true,
                         currentTime: DateTime.now(), onConfirm: (time) {
                       setState(() {
-                        breakedtime = "${time.minute}: ${time.second}";
+                        breakedtime = "${time.hour} : ${time.minute}";
                       });
                     });
                   },
@@ -121,35 +123,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextButton(
+                ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
                     onPressed: () {
+                      // if (interval == null || interval!.text.isEmpty) {
+                      //   showAlertDialog(
+                      //       context, 'Alert', 'Please enter #No of interval');
+                      // } else if (pickedtime!.isEmpty) {
+                      //   showAlertDialog(
+                      //       context, 'Alert', 'Please enter Training duration');
+                      // } else if (breakedtime!.isEmpty) {
+                      //   showAlertDialog(
+                      //       context, 'Alert', 'Please enter Break duration');
+                      // }
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SecondScreen(
                                     starttime: pickedtime,
-                                    // count: interval ,
+                                    //count: interval!.text,
                                     exittime: breakedtime,
                                   )));
-                      // if (interval == null) {
-                      //   const CustomAlertBox(
-                      //       'Please enter #No of intervals', 'a');
-                      // } else if (pickedtime!.isEmpty) {
-                      //   const CustomAlertBox(
-                      //       'Please enter #No of intervals', 'a');
-                      // } else if (breakedtime!.isEmpty) {
-                      //   const CustomAlertBox(
-                      //       'Please enter #No of intervals', 'a');
-                      // } else {
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => const SecondScreen()));
-                      // }
                     },
                     child: const Text(
                       'Submit',
