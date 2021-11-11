@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:skns/screens/second_screen.dart';
+import 'package:skns/widgets/custom_alertdialog.dart';
 import 'package:skns/widgets/custom_textfeild.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -129,25 +130,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
                     onPressed: () {
-                      // if (interval == null || interval!.text.isEmpty) {
-                      //   showAlertDialog(
-                      //       context, 'Alert', 'Please enter #No of interval');
-                      // } else if (pickedtime!.isEmpty) {
-                      //   showAlertDialog(
-                      //       context, 'Alert', 'Please enter Training duration');
-                      // } else if (breakedtime!.isEmpty) {
-                      //   showAlertDialog(
-                      //       context, 'Alert', 'Please enter Break duration');
-                      // }
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SecondScreen(
-                                    starttime: pickedtime,
-                                    //count: interval!.text,
-                                    exittime: breakedtime,
-                                  )));
+                      if (interval == null || interval!.text.isEmpty) {
+                        showAlertDialog(
+                            context, 'Alert', 'Please enter #No of interval');
+                      }
+                      if (pickedtime!.isEmpty) {
+                        showAlertDialog(
+                            context, 'Alert', 'Please enter Training duration');
+                      }
+                      if (breakedtime!.isEmpty) {
+                        showAlertDialog(
+                            context, 'Alert', 'Please enter Break duration');
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SecondScreen(
+                                      starttime: pickedtime,
+                                      //count: interval!.text,
+                                      exittime: breakedtime,
+                                    )));
+                      }
                     },
                     child: const Text(
                       'Submit',
