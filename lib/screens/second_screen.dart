@@ -54,7 +54,8 @@ class _SecondScreenState extends State<SecondScreen> {
               CustomTimer(
                 onFinish: navigator,
                 controller: _controller,
-                from: calcultetime as Duration,
+                ////// here put calculate value
+                from: const Duration(minutes: 1),
                 to: const Duration(hours: 0),
                 interval: const Duration(seconds: 1),
                 builder: (CustomTimerRemainingTime remaining) {
