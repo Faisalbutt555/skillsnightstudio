@@ -5,7 +5,7 @@ import 'package:skns/screens/finished_widget.dart';
 class SecondScreen extends StatefulWidget {
   final String? starttime;
   final String? exittime;
-  final String? count;
+  final TextEditingController? count;
   const SecondScreen({Key? key, this.exittime, this.count, this.starttime})
       : super(key: key);
   @override
@@ -19,6 +19,19 @@ class _SecondScreenState extends State<SecondScreen> {
   navigator() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const FinishedWidget()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // ignore: avoid_print
+    print("ye${widget.count}\n");
+    // ignore: avoid_print
+    print("start${widget.starttime}\n");
+    // ignore: avoid_print
+    print("exit${widget.exittime}\n");
+    // ignore: avoid_print
+    print(calcultetime);
   }
 
   @override
@@ -55,7 +68,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 onFinish: navigator,
                 controller: _controller,
                 ////// here put calculate value
-                from: const Duration(minutes: 1),
+                from: const Duration(seconds: 1),
                 to: const Duration(hours: 0),
                 interval: const Duration(seconds: 1),
                 builder: (CustomTimerRemainingTime remaining) {
