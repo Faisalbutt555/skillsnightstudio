@@ -13,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController? interval;
-  FocusNode? trainingnode;
+  TextEditingController? interval = TextEditingController();
+
   String? pickedtime;
   String? breakedtime;
 
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 CustomTextFeild(
-                  focusNode: trainingnode,
+                  textInputType: TextInputType.number,
                   textEditingController: interval,
                   hinttxt: 'Total Training Intervals',
                 ),
@@ -130,24 +130,30 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
                     onPressed: () {
-                      if (interval == null || interval!.text.isEmpty) {
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => SecondScreen(
+                      //               starttime: pickedtime,
+                      //               count: interval,
+                      //               exittime: breakedtime,
+                      //             )));
+                      if (interval!.text.isEmpty) {
                         showAlertDialog(
                             context, 'Alert', 'Please enter #No of interval');
-                      }
-                      if (pickedtime!.isEmpty) {
+                      } else if (pickedtime == null) {
                         showAlertDialog(
                             context, 'Alert', 'Please enter Training duration');
-                      }
-                      if (breakedtime!.isEmpty) {
+                      } else if (breakedtime == null) {
                         showAlertDialog(
-                            context, 'Alert', 'Please enter Break duration');
+                            context, 'Alert', 'Please enter break duration');
                       } else {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SecondScreen(
                                       starttime: pickedtime,
-                                      //count: interval!.text,
+                                      count: interval!.text,
                                       exittime: breakedtime,
                                     )));
                       }

@@ -5,14 +5,13 @@ import 'package:flutter/services.dart';
 
 class CustomTextFeild extends StatelessWidget {
   final String? hinttxt;
-  final FocusNode? focusNode;
   final TextEditingController? textEditingController;
-  final String? Function(String?)? validator;
+  final TextInputType textInputType;
+
   const CustomTextFeild({
     Key? key,
+    required this.textInputType,
     this.hinttxt,
-    this.focusNode,
-    this.validator,
     this.textEditingController,
   }) : super(
           key: key,
@@ -25,8 +24,8 @@ class CustomTextFeild extends StatelessWidget {
           WhitelistingTextInputFormatter.digitsOnly
         ],
         autovalidate: true,
-        focusNode: focusNode,
-        validator: validator,
+        maxLength: 1,
+        keyboardType: textInputType,
         controller: textEditingController,
         maxLines: 2,
         decoration: InputDecoration(
@@ -35,6 +34,7 @@ class CustomTextFeild extends StatelessWidget {
               fontSize: 20,
             ),
             hintText: hinttxt,
+            counterText: "",
             hintStyle: const TextStyle(color: Colors.grey),
             border: InputBorder.none,
             focusedErrorBorder: const OutlineInputBorder(

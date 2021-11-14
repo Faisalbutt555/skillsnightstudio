@@ -5,7 +5,7 @@ import 'package:skns/screens/finished_widget.dart';
 class SecondScreen extends StatefulWidget {
   final String? starttime;
   final String? exittime;
-  final TextEditingController? count;
+  final String? count;
   const SecondScreen({Key? key, this.exittime, this.count, this.starttime})
       : super(key: key);
   @override
@@ -25,7 +25,7 @@ class _SecondScreenState extends State<SecondScreen> {
   void initState() {
     super.initState();
     // ignore: avoid_print
-    print("ye${widget.count}\n");
+    print("ye controler hai \n${widget.count}\n");
     // ignore: avoid_print
     print("start${widget.starttime}\n");
     // ignore: avoid_print
