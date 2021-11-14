@@ -5,7 +5,7 @@ import 'package:skns/screens/finished_widget.dart';
 class SecondScreen extends StatefulWidget {
   final String? starttime;
   final String? exittime;
-  final String? count;
+  final TextEditingController? count;
   const SecondScreen({Key? key, this.exittime, this.count, this.starttime})
       : super(key: key);
   @override
@@ -16,6 +16,7 @@ class _SecondScreenState extends State<SecondScreen> {
   final CustomTimerController _controller = CustomTimerController();
   late final String calcultetime = (widget.starttime! + widget.exittime!);
   bool select = false;
+  int? counter;
   navigator() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const FinishedWidget()));
@@ -25,7 +26,7 @@ class _SecondScreenState extends State<SecondScreen> {
   void initState() {
     super.initState();
     // ignore: avoid_print
-    print("ye controler hai \n${widget.count}\n");
+    print("controler count \n${widget.count}\n");
     // ignore: avoid_print
     print("start${widget.starttime}\n");
     // ignore: avoid_print
@@ -37,6 +38,8 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+// ignore: unrelated_type_equality_checks
+      backgroundColor: widget.count == 1 ? Colors.white : Colors.red,
       body: SafeArea(
         child: SizedBox(
           height: double.infinity,
@@ -55,7 +58,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      '1 Round',
+                      '1',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -67,9 +70,8 @@ class _SecondScreenState extends State<SecondScreen> {
               CustomTimer(
                 onFinish: navigator,
                 controller: _controller,
-                ////// here put calculate value
-                from: const Duration(seconds: 1),
-                to: const Duration(hours: 0),
+                from: const Duration(seconds: 04),
+                to: const Duration(seconds: 0),
                 interval: const Duration(seconds: 1),
                 builder: (CustomTimerRemainingTime remaining) {
                   return Text(

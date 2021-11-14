@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => SecondScreen(
                                       starttime: pickedtime,
-                                      count: interval!.text,
+                                      count: interval,
                                       exittime: breakedtime,
                                     )));
                       }
