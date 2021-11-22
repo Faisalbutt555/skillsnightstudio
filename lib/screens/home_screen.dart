@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:skns/models/custompicker.dart';
+import 'package:skns/models/homemodel.dart';
 import 'package:skns/screens/second_screen.dart';
 import 'package:skns/widgets/custom_alertdialog.dart';
 import 'package:skns/widgets/custom_textfeild.dart';
@@ -15,9 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? interval = TextEditingController();
 
-  String? pickedtime;
-  String? breakedtime;
-
+  HomeModel homeModel = HomeModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    DatePicker.showTime12hPicker(context,
-                        showTitleActions: true,
-                        currentTime: DateTime.now(), onConfirm: (time) {
-                      setState(() {
-                        pickedtime = "${time.hour} : ${time.minute}";
-                      });
-                    });
+                    DatePicker.showPicker(
+                      context,
+                      showTitleActions: true,
+                      onConfirm: (time) {
+                        setState(() {
+                          homeModel.initialtime =
+                              DateFormat("mm:ss").format(time);
+                        });
+                      },
+                      pickerModel: CustomPicker(
+                          currentTime: DateTime.now(), locale: LocaleType.en),
+                    );
                   },
                   child: Container(
                     height: 80,
@@ -66,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          (pickedtime == null)
+                          (homeModel.initialtime == null)
                               ? const Text(" ")
                               : Text(
-                                  "$pickedtime",
+                                  homeModel.initialtime!,
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 21),
                                 ),
@@ -83,13 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    DatePicker.showTime12hPicker(context,
-                        showTitleActions: true,
-                        currentTime: DateTime.now(), onConfirm: (time) {
-                      setState(() {
-                        breakedtime = "${time.hour} : ${time.minute}";
-                      });
-                    });
+                    DatePicker.showPicker(
+                      context,
+                      showTitleActions: true,
+                      onConfirm: (time) {
+                        setState(() {
+                          homeModel.breaktime =
+                              DateFormat("mm:ss").format(time);
+                        });
+                      },
+                      pickerModel: CustomPicker(
+                          currentTime: DateTime.now(), locale: LocaleType.en),
+                    );
                   },
                   child: Container(
                     height: 80,
@@ -109,10 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          (breakedtime == null)
+                          (homeModel.breaktime == null)
                               ? const Text(" ")
                               : Text(
-                                  "$breakedtime",
+                                  homeModel.breaktime!,
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 21),
                                 ),
@@ -130,21 +141,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => SecondScreen(
-                      //               starttime: pickedtime,
-                      //               count: interval,
-                      //               exittime: breakedtime,
-                      //             )));
                       if (interval!.text.isEmpty) {
                         showAlertDialog(
                             context, 'Alert', 'Please enter #No of interval');
-                      } else if (pickedtime == null) {
+                      } else if (homeModel.initialtime == null) {
                         showAlertDialog(
                             context, 'Alert', 'Please enter Training duration');
-                      } else if (breakedtime == null) {
+                      } else if (homeModel.breaktime == null) {
                         showAlertDialog(
                             context, 'Alert', 'Please enter break duration');
                       } else {
@@ -152,9 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SecondScreen(
-                                      starttime: pickedtime,
+                                      starttime: homeModel.initialtime,
                                       count: interval,
-                                      exittime: breakedtime,
+                                      exittime: homeModel.breaktime,
                                     )));
                       }
                     },

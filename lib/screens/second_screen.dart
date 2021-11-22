@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'package:custom_timer/custom_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:skns/models/homemodel.dart';
 import 'package:skns/screens/finished_widget.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -14,9 +16,8 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   final CustomTimerController _controller = CustomTimerController();
-  late final String calcultetime = (widget.starttime! + widget.exittime!);
   bool select = false;
-  int? counter;
+  HomeModel homeModel = HomeModel();
   navigator() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const FinishedWidget()));
@@ -25,21 +26,14 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   void initState() {
     super.initState();
-    // ignore: avoid_print
-    print("controler count \n${widget.count}\n");
-    // ignore: avoid_print
-    print("start${widget.starttime}\n");
-    // ignore: avoid_print
-    print("exit${widget.exittime}\n");
-    // ignore: avoid_print
-    print(calcultetime);
+    log("controler count  ${widget.count!.text.toString()}");
+    log("start${widget.starttime}\n");
+    log("exit${widget.exittime}\n");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-// ignore: unrelated_type_equality_checks
-      backgroundColor: widget.count == 1 ? Colors.white : Colors.red,
       body: SafeArea(
         child: SizedBox(
           height: double.infinity,
@@ -58,7 +52,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      '1',
+                      '1 Round',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -70,9 +64,10 @@ class _SecondScreenState extends State<SecondScreen> {
               CustomTimer(
                 onFinish: navigator,
                 controller: _controller,
-                from: const Duration(seconds: 04),
+                from: const Duration(seconds: 8),
                 to: const Duration(seconds: 0),
                 interval: const Duration(seconds: 1),
+                // onFinishAction: CustomTimerAction.go_to_start,
                 builder: (CustomTimerRemainingTime remaining) {
                   return Text(
                     "${remaining.minutes}:${remaining.seconds}",
